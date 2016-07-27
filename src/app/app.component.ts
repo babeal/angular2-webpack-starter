@@ -2,6 +2,8 @@
  * Angular 2 decorators and services
  */
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/observable/dom/webSocket";
 
 import { AppState } from './app.service';
 
@@ -65,6 +67,10 @@ export class App {
 
   constructor(
     public appState: AppState) {
+
+    const socket = Observable.webSocket('wss://echo.websocket.org');
+    socket.next(JSON.stringify('bla'));
+    socket.map(e => e + " bliep").subscribe(e => console.log(e));
 
   }
 
